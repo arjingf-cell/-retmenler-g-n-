@@ -179,12 +179,17 @@
     el.addEventListener("animationend", () => el.remove());
   }
 
+  // arkada hep yavaş yavaş akan güller
+  if (!reduce) setInterval(petal, 700);
+
+  // butonla yoğun yağmur
   let timer = null;
   function setRain(on) {
     clearInterval(timer);
-    timer = on ? setInterval(petal, 140) : null;
+    timer = on ? setInterval(petal, 120) : null;
+    if (on) for (let i = 0; i < 25; i++) setTimeout(petal, i * 40);
     const b = $("rain");
-    b.textContent = on ? "Yağmuru Durdur 🌹" : "Gül Yağmuru Başlat 🌹";
+    b.textContent = on ? "Yağmuru Azalt 🌹" : "Gül Yağmuru Başlat 🌹";
     b.setAttribute("aria-pressed", String(on));
   }
 
