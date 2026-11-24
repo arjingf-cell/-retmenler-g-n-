@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Öğretmenler Günün Kutlu Olsun 🌹</title>
+<style>
+  :root {
+    --text: #fff;
+    --glass-bg: rgba(255, 255, 255, 0.14);
+    --glass-border: rgba(255, 255, 255, 0.28);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, #3a0f3f, #7a1f4f 50%, #c2456b);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+  }
+
+  /* Blur'un işe yaraması için renkli, hareketli arka plan */
+  .blob {
+    position: fixed; border-radius: 50%; filter: blur(60px); opacity: .75;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .b1 { width: 45vmax; height: 45vmax; background: #ff4d79; top: -10vmax; left: -10vmax; }
+  .b2 { width: 40vmax; height: 40vmax; background: #ffb86b; bottom: -12vmax; right: -8vmax; animation-delay: -5s; }
+  .b3 { width: 30vmax; height: 30vmax; background: #8f5bff; top: 40%; left: 55%; animation-delay: -9s; }
+  @keyframes drift { to { transform: translate(6vmax, 5vmax) scale(1.15); } }
+
+  .glass {
+    position: relative; z-index: 2;
+    width: min(92vw, 520px);
+    padding: 44px 32px;
+    text-align: center;
+    background: rgba(90, 20, 60, 0.45); /* fallback */
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255,255,255,.3);
+    animation: rise .9s ease both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px) scale(.97); } }
+
+  .emoji { font-size: 3rem; display: block; margin-bottom: 12px; animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { transform: scale(1.12); } }
+  h1 { font-size: clamp(1.7rem, 6vw, 2.4rem); line-height: 1.2; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
+  p { margin-top: 16px; font-size: clamp(1.05rem, 3.6vw, 1.3rem); line-height: 1.55; text-shadow: 0 1px 8px rgba(0,0,0,.35); }
+  .roses { margin-top: 22px; font-size: 2rem; letter-spacing: 8px; }
+
+  button {
+    margin-top: 26px; padding: 12px 26px; font: inherit; font-weight: 600; color: #fff; cursor: pointer;
+    background: rgba(255,255,255,.18); border: 1px solid var(--glass-border); border-radius: 999px;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    transition: transform .2s, background .2s;
+  }
+  button:hover { background: rgba(255,255,255,.3); transform: translateY(-2px); }
+  button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+  .petal { position: fixed; top: -40px; z-index: 1; pointer-events: none; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+  @media (prefers-contrast: more) {
+    .glass { background: rgba(40, 5, 30, .92); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .blob, .emoji, .glass { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <main class="glass">
+    <span class="emoji">🌹</span>
+    <h1>Öğretmenler Günün Kutlu Olsun</h1>
+    <p>Senin için en iyisini istiyorum.</p>
+    <div class="roses" aria-hidden="true">🌹🌹🌹</div>
+    <button id="btn" type="button">Sürpriz 💐</button>
+  </main>
+
+<script>
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function shower(n) {
+    if (reduce) return;
+    for (let i = 0; i < n; i++) {
+      const el = document.createElement("span");
+      el.className = "petal";
+      el.textContent = Math.random() < .7 ? "🌹" : "🌸";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.fontSize = 16 + Math.random() * 22 + "px";
+      el.style.animationDuration = 4 + Math.random() * 5 + "s";
+      el.style.animationDelay = Math.random() * 2 + "s";
+      document.body.appendChild(el);
+      el.addEventListener("animationend", () => el.remove());
+    }
+  }
+  shower(14);
+  document.getElementById("btn").addEventListener("click", () => shower(40));
+</script>
+</body>
+</html>
