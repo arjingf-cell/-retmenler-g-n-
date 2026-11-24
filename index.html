@@ -88,7 +88,6 @@
 <script>
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function shower(n) {
-    if (reduce) return;
     for (let i = 0; i < n; i++) {
       const el = document.createElement("span");
       el.className = "petal";
@@ -101,7 +100,7 @@
       el.addEventListener("animationend", () => el.remove());
     }
   }
-  shower(14);
+  if (!reduce) shower(14);
   document.getElementById("btn").addEventListener("click", () => shower(40));
 </script>
 </body>
